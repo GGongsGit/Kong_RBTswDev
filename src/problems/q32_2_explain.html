@@ -1,0 +1,6 @@
+<div class="ex-sec"><b>문제를 한 줄로</b><p>주어진 거리·시간·최대 가속도로 사다리꼴(LSPB) 운동이 가능한지, 딱 삼각형(BBPB)인지, 불가능한지 판정하는 문제입니다.</p></div><div class="ex-sec"><b>풀이 아이디어</b><p>앞 문제의 이차방정식 t_b² − t_f·t_b + Δq/a = 0 에서 판별식 t_f² − 4Δq/a 가 0 이상이어야 실수 해가 있습니다. 정리하면 <b>a ≥ 4Δq / t_f²</b> 입니다. 이 값을 a_min(필요한 최소 가속도)이라 하면:</p><pre class="calc">a > a_min  → 사다리꼴(등속 구간 있음)  LSPB
+a = a_min  → 삼각형(가속 끝나자마자 감속) BBPB
+a < a_min  → 시간 안에 못 감             IMPOSSIBLE</pre></div><div class="ex-sec"><b>코드 순서</b><ol><li>줄마다 Δq, t_f, a_max를 읽습니다.</li><li>a_min = 4|Δq| / t_f²</li><li>부동소수 비교라 같음은 <code>abs(a − a_min) &lt; 1e-9</code>로 판단합니다.</li></ol></div><div class="ex-sec"><b>숫자로 확인</b><pre class="calc">1.0 2.0 2.0 : a_min = 4×1/4 = 1.0  → 2.0 > 1.0  LSPB
+1.0 2.0 1.0 : a_min = 1.0         → 같음      BBPB
+1.0 2.0 0.8 : a_min = 1.0         → 0.8 < 1.0 IMPOSSIBLE
+0.5 1.0 3.0 : a_min = 4×0.5/1 = 2.0 → 3.0 > 2.0 LSPB</pre></div><div class="ex-sec"><b>자주 하는 실수</b><ul><li><code>a == a_min</code>처럼 실수를 ==로 비교하면 0.30000000000000004 같은 오차 때문에 틀릴 수 있습니다.</li><li>Δq가 음수(되돌아가기)일 때도 판정은 거리이므로 절댓값을 씁니다.</li></ul></div>

@@ -1,0 +1,7 @@
+<div class="ex-sec"><b>문제를 한 줄로</b><p>네트워크로 받은 CAN 프레임 문자열(SLCAN 형식)을 읽어 ID, 길이, 데이터로 나누고, 형식이 잘못된 줄은 버리는 문제입니다.</p></div><div class="ex-sec"><b>풀이 아이디어</b><p>SLCAN은 CAN 프레임 하나를 글자 한 줄로 보냅니다.</p><pre class="calc">t 200 8 1027050032010000
+│  │  │  └ 데이터 (길이 × 2 글자)
+│  │  └ 길이(DLC) 1글자
+│  └ ID 3글자(16진수)
+└ 't' = 표준 ID 프레임</pre><p>데이터 글자 수가 DLC × 2와 다르면 중간에 잘린 줄이라 버립니다. 'T'로 시작하면 확장 ID(8글자) 형식이라 이 문제에서는 처리하지 않습니다.</p></div><div class="ex-sec"><b>코드 순서</b><ol><li>줄 첫 글자가 't'인지, 길이가 5글자 이상인지 봅니다.</li><li>ID = int(line[1:4], 16), DLC = int(line[4], 16)</li><li>line[5:]의 길이가 DLC × 2인지 확인합니다.</li><li><code>bytes.fromhex</code>로 데이터를 바이트로 바꾸고, 형식이 틀리면 SKIP으로 셉니다.</li></ol></div><div class="ex-sec"><b>숫자로 확인</b><pre class="calc">t2008E803F4015502000  → 데이터 15글자, DLC 8이면 16글자여야 함 → SKIP
+T1234567820102        → 'T'(확장) → SKIP
+t5810                 → ID 0x581, DLC 0, 데이터 없음 (정상)</pre><p>정상 5줄, 건너뜀 2줄입니다.</p></div><div class="ex-sec"><b>자주 하는 실수</b><ul><li>int()가 실패할 수 있는 부분(16진수가 아닌 글자)은 try/except로 감싸야 프로그램이 멈추지 않습니다.</li><li>DLC 0 프레임도 정상입니다. 데이터가 없다고 버리지 않습니다.</li></ul></div>
