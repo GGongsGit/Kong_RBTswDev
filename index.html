@@ -1427,6 +1427,51 @@ a_max·t_b² − a_max·t_f·t_b + (q_f − q<sub>0</sub>) = 0      <span class=
 coeffs = [1, -tf, (qf - q0) / amax]
 roots  = np.roots(coeffs)
 tb     = roots.min().real                       <span class="c"># 작은 근</span></div>
+<div class="iofile" style="margin-top:10px"><div class="bar2"><span>속도-시간 그래프 · 넓이 = 이동량 Δq</span></div><div style="padding:12px 14px">
+<svg viewBox="0 0 720 420" width="720" style="max-width:100%;height:auto" role="img" aria-label="LSPB 속도-시간 그래프와 구간별 이동량" font-family="var(--f-body)" font-size="15">
+<defs><marker id="lspbArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker><marker id="lspbDim" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+<polygon points="92.0,296.0 166.68777079743037,86.4 166.68777079743037,296.0" fill="var(--plot-q)" fill-opacity=".28"/>
+<rect x="166.68777079743037" y="86.4" width="360.6244584051392" height="209.6" fill="var(--plot-v)" fill-opacity=".22"/>
+<polygon points="527.3122292025696,296.0 527.3122292025696,86.4 602.0,296.0" fill="var(--plot-a)" fill-opacity=".28"/>
+<line x1="166.68777079743037" y1="86.4" x2="166.68777079743037" y2="296.0" stroke="var(--muted)" stroke-dasharray="4 4"/>
+<line x1="527.3122292025696" y1="86.4" x2="527.3122292025696" y2="296.0" stroke="var(--muted)" stroke-dasharray="4 4"/>
+<line x1="92" y1="86.4" x2="166.68777079743037" y2="86.4" stroke="var(--muted)" stroke-dasharray="4 4"/>
+<polyline points="92.0,296.0 166.68777079743037,86.4 527.3122292025696,86.4 602.0,296.0" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+<line x1="92" y1="296.0" x2="630" y2="296.0" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#lspbArr)"/>
+<line x1="92" y1="296.0" x2="92" y2="20" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#lspbArr)"/>
+<text x="100" y="22" fill="var(--ink)" font-weight="600">속도 V (rad/s)</text>
+<text x="636" y="301.0" fill="var(--ink)" font-weight="600">시간 t (s)</text>
+<text x="84" y="91.4" text-anchor="end" fill="var(--ink)">V_max</text>
+<text x="84" y="301.0" text-anchor="end" fill="var(--muted)">0</text>
+<text x="92.0" y="318.0" text-anchor="middle" fill="var(--muted)">0</text>
+<text x="166.68777079743037" y="318.0" text-anchor="middle" fill="var(--ink)">t_b</text>
+<text x="527.3122292025696" y="318.0" text-anchor="middle" fill="var(--ink)">t_f − t_b</text>
+<text x="602.0" y="318.0" text-anchor="middle" fill="var(--ink)">t_f</text>
+<line x1="95.0" y1="346.0" x2="163.68777079743037" y2="346.0" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#lspbDim)" marker-end="url(#lspbDim)"/>
+<text x="129.3438853987152" y="366.0" text-anchor="middle" fill="var(--plot-q)" font-weight="700">t_b</text>
+<line x1="169.68777079743037" y1="346.0" x2="524.3122292025696" y2="346.0" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#lspbDim)" marker-end="url(#lspbDim)"/>
+<text x="347.0" y="366.0" text-anchor="middle" fill="var(--plot-v)" font-weight="700">t_f − 2t_b</text>
+<line x1="530.3122292025696" y1="346.0" x2="599.0" y2="346.0" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#lspbDim)" marker-end="url(#lspbDim)"/>
+<text x="564.6561146012848" y="366.0" text-anchor="middle" fill="var(--plot-a)" font-weight="700">t_b</text>
+<text x="129.3438853987152" y="386.0" text-anchor="middle" fill="var(--muted)" font-size="13">가속</text>
+<text x="129.3438853987152" y="404.0" text-anchor="middle" fill="var(--plot-q)" font-size="13">기울기 +a_max</text>
+<text x="347.0" y="386.0" text-anchor="middle" fill="var(--muted)" font-size="13">등속</text>
+<text x="347.0" y="404.0" text-anchor="middle" fill="var(--plot-v)" font-size="13">기울기 0 (V_max 유지)</text>
+<text x="564.6561146012848" y="386.0" text-anchor="middle" fill="var(--muted)" font-size="13">감속</text>
+<text x="564.6561146012848" y="404.0" text-anchor="middle" fill="var(--plot-a)" font-size="13">기울기 −a_max</text>
+<text x="141.29392872630405" y="249.888" text-anchor="middle" fill="var(--ink)" font-weight="700">Δq<tspan baseline-shift="sub" font-size="72%">1</tspan></text>
+<text x="347.0" y="185.2" text-anchor="middle" fill="var(--ink)" font-weight="700" font-size="17">Δq<tspan baseline-shift="sub" font-size="72%">2</tspan> = V_max·(t_f − 2t_b)</text>
+<text x="347.0" y="209.2" text-anchor="middle" fill="var(--muted)" font-size="13">직사각형 = 가로 × 세로</text>
+<text x="552.7060712736959" y="249.888" text-anchor="middle" fill="var(--ink)" font-weight="700">Δq<tspan baseline-shift="sub" font-size="72%">3</tspan></text>
+</svg>
+<ul style="margin:8px 0 0;padding-left:1.2em;font-size:.92rem;line-height:1.8">
+<li><b style="color:var(--plot-q)">Δq<sub>1</sub></b> 가속 삼각형 = ½ × 밑변 t_b × 높이 V_max = ½·a_max·t_b²</li>
+<li><b style="color:var(--plot-v)">Δq<sub>2</sub></b> 등속 직사각형 = 가로 (t_f − 2t_b) × 세로 V_max = a_max·t_b·(t_f − 2t_b)</li>
+<li><b style="color:var(--plot-a)">Δq<sub>3</sub></b> 감속 삼각형 = 직사각형 V_max·t_b − 빠지는 삼각형 ½·a_max·t_b² = ½·a_max·t_b² (Δq<sub>1</sub>과 같음)</li>
+<li>전체 넓이 Δq<sub>1</sub> + Δq<sub>2</sub> + Δq<sub>3</sub> = q_f − q<sub>0</sub> (사다리꼴 넓이)</li>
+</ul>
+<p class="hint" style="margin:6px 0 0">그림은 q<sub>0</sub> = 0, q_f = 1 rad, t_f = 2 s, a_max = 2 rad/s² 비율로 그렸습니다 → t_b = 0.2929 s, V_max = 0.5858 rad/s, Δq<sub>1</sub> = 0.0858, Δq<sub>2</sub> = 0.8284, Δq<sub>3</sub> = 0.0858, 합 = 1.0000 rad</p>
+</div></div>
 <div class="note tip"><div class="t">근의 공식과 주의할 점</div><ul>
 <li>근의 공식: t_b = ( t_f − √(t_f² − 4(q_f − q<sub>0</sub>)/a_max) ) / 2 — 위 요약의 식과 같습니다.</li>
 <li><b>작은 근</b>을 고르는 이유: 큰 근은 t_b &gt; t_f/2가 되어 가속 구간과 감속 구간이 겹칩니다. 예) q<sub>0</sub> = 0, q_f = 1, t_f = 2, a_max = 2 → 근 1.7071, 0.2929 → t_b = 0.2929</li>
