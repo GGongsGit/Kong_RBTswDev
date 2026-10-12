@@ -46,7 +46,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 | 06 동역학 | 6-1 동역학 Computed-Torque |
 | 07 통신·모니터링 | 7-1 CAN, 7-2 TCP/IP·SLCAN·SDO, 7-3 상태 모니터링 |
 | 08 위치 추정·지도 | 8-1 파티클 필터, 8-2 점유 격자 지도 |
-| 09 Mistake Check List | 제출 전 점검 목록 |
+| 09 Prerequisite Notice List | 제출 전 점검 목록 |
 | 10 엑셀로 차트 그리기 | 10-1 관절 위치 차트, 10-2 A* 경로 + Block 차트 (sample_data 엑셀 파일 기준) |
 
 예상 문제 파일 이름 `q<단원><항목>_<번호>`는 처음 만들 때의 번호를 그대로 씁니다. 예: `q22_1` = 2-2 IK 예상 문제 1, `q52_1` = 6-1 동역학 예상 문제 1, `q61_1` = 7-1 CAN, `q91_1` = 10-1 관절 위치 차트. 각 문제의 상세 설명은 `src/problems/<문제>_explain.html`.
@@ -58,7 +58,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 | 01 함수 설명 & 파일 처리 | func_demo.py, io_template.py, csv_module.py, csv_pandas.py, csv_numpy.py, encoding_demo.py, read_auto.py |
 | 02 기구학 | fk2.py, ik2.py, ik_newton.py, ik3_dh.py, mk.py |
 | 03 궤적 계획 | cubic.py, lspb.py, bbpb.py, rrtstar.py |
-| 04 경로 탐색 | astar.py, dijkstra.py, floyd.py |
+| 04 경로 탐색 | astar.py, dijkstra.py(① source만), dijkstra_target.py(② source + target), floyd.py |
 | 05 제어 | pid.py |
 | 07 통신 | can.py, fan.py |
 | 10 엑셀 차트 | excel_joint_chart.py, excel_astar_chart.py |
@@ -94,3 +94,18 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 - 2026-10-10 v27 메뉴 02·03 연두색을 더 밝게 (#c6f68d / 밝은 화면 #7cc242)
 - 2026-10-10 v28 메뉴 02·03 강조 글씨를 노란색으로 변경 (#ffd84d / 밝은 화면 #b08900)
 - 2026-10-10 v29 궤적 실습판 그래프 라벨(위치·속도·가속도)이 곡선에 가리지 않도록 그래프 칸 바깥(위쪽)에 표시
+- 2026-10-10 v30 4-1 Dijkstra를 ① source만(모든 노드) / ② source + target(경로·비용, 일찍 멈춤)으로 나눠 다시 정리, 예제 코드 2개와 실행 결과 추가
+- 2026-10-12 v31 시험 개요의 출제기준 주요 항목을 표로 수정 (주요항목 6개 순서·정식 명칭, 세부항목 18개, 로봇 운영 SW에 응용·훈련 SW 2개 추가, 노트 단원 연결)
+- 2026-10-12 v32 4-2 A* 프로그램 CODE를 사용자 제공 코드로 교체(4×4 격자, 8방향 유클리드), 실행 결과 추가
+- 2026-10-12 v33 4-2 A* 코드에 대각선 모서리 통과 금지 검사와 상세 주석 추가 (예제 결과 거리 4.83 → 5.41)
+- 2026-10-12 v34 4-2 A* 실행 결과를 격자 그림으로도 표시 (경로, 꺼낸 순서, 벽, 막힌 대각선), tools/gen_astar_graph.py 추가
+- 2026-10-12 v35 A* 실행 결과 그림: 행 0을 맨 아래로, 열 번호를 아래쪽에 표시
+- 2026-10-12 v36 코드 글꼴 합자(ligature) 끔: <=, ==, != 등이 ≤, ═ 같은 기호로 바뀌어 보이던 문제 수정
+- 2026-10-12 v37 합자 끄기를 코드 안쪽 모든 글자(구문 강조 span 포함)에 강제 적용 (== 표시 수정)
+- 2026-10-12 v38 6-1 동역학 상세 내용에 CTC 유도 정리(필기 노트) 추가, q̇·q̈ 점 위치를 조금 위로
+- 2026-10-12 v39 6-1 동역학 필기 노트 ② 오차 동역학 방정식(라플라스 변환, 근, 임계감쇠) 추가
+- 2026-10-12 v40 6-1 동역학 주의해야 될 내용에 M, C, G 구하는 방법(라그랑주, 모델 그림, M·G·h 그래프, 숫자 확인) 추가, tools/gen_mcg.py
+- 2026-10-12 v41 1-1 사용 함수 numpy 표에 np.matlib.eye 추가 (54개)
+- 2026-10-12 v42 np.matlib.eye 삭제, np.eye를 따로 한 줄로 설명 (np.zeros와 분리)
+- 2026-10-12 v43 np.arccos·np.arctan2 줄에 np.acos·np.atan2(numpy 2.0 별칭) 메모 추가
+- 2026-10-12 v44 09 메뉴 이름을 「Prerequisite Notice List」로 변경
