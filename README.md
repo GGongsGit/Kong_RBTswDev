@@ -42,14 +42,14 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 | 02 기구학 | 2-1 FK, 2-2 IK, 2-3 MK |
 | 03 궤적 계획 | 3-1 등속·CUBIC, 3-2 LSPB·BBPB, 3-3 RRT* |
 | 04 경로 탐색 | 4-1 Dijkstra, 4-2 A*, 4-3 Floyd-Warshall |
-| 05 제어 | 5-1 PID |
+| 05 제어 | 5-1 PID, 5-2 PD + 중력 보상, 5-3 Computed-Torque |
 | 06 동역학 | 6-1 동역학 Computed-Torque |
 | 07 통신·모니터링 | 7-1 CAN, 7-2 TCP/IP·SLCAN·SDO, 7-3 상태 모니터링 |
 | 08 위치 추정·지도 | 8-1 파티클 필터, 8-2 점유 격자 지도 |
 | 09 Prerequisite Notice List | 제출 전 점검 목록 |
 | 10 엑셀로 차트 그리기 | 10-1 관절 위치 차트, 10-2 A* 경로 + Block 차트 (sample_data 엑셀 파일 기준) |
 
-예상 문제 파일 이름 `q<단원><항목>_<번호>`는 처음 만들 때의 번호를 그대로 씁니다. 예: `q22_1` = 2-2 IK 예상 문제 1, `q52_1` = 6-1 동역학 예상 문제 1, `q61_1` = 7-1 CAN, `q91_1` = 10-1 관절 위치 차트. 각 문제의 상세 설명은 `src/problems/<문제>_explain.html`.
+예상 문제 파일 이름 `q<단원><항목>_<번호>`는 처음 만들 때의 번호를 그대로 씁니다. 예: `q22_1` = 2-2 IK 예상 문제 1, `q52_1` = 6-1 동역학 예상 문제 1, `q53_1` = 5-2 PD+G, `q54_1` = 5-3 CTC, `q61_1` = 7-1 CAN, `q91_1` = 10-1 관절 위치 차트. 각 문제의 상세 설명은 `src/problems/<문제>_explain.html`.
 
 ## 예제 코드 목록
 
@@ -59,7 +59,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 | 02 기구학 | fk2.py, ik2.py, ik_newton.py, ik3_dh.py, mk.py |
 | 03 궤적 계획 | cubic.py, lspb.py, bbpb.py, rrtstar.py |
 | 04 경로 탐색 | astar.py, dijkstra.py(① source만), dijkstra_target.py(② source + target), floyd.py |
-| 05 제어 | pid.py |
+| 05 제어 | pid.py, pdg.py, ctc.py |
 | 07 통신 | can.py, fan.py |
 | 10 엑셀 차트 | excel_joint_chart.py, excel_astar_chart.py |
 
@@ -113,3 +113,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 - 2026-10-12 v46 LSPB t_b 유도 노트 3) 감속 구간에 V_max = a_max·t_b 줄 추가
 - 2026-10-12 v47 LSPB t_b 유도 노트 3) 감속 구간에 Δq₃ = V_max·t_b − ½·a_max·t_b² 줄 추가
 - 2026-10-12 v48 LSPB t_b 유도 노트 감속 구간 V_max 줄의 주석 삭제
+- 2026-10-12 v49 6-1 M·C·G 그림·그래프: 글자 크기 키우고 겹침 제거, 아래 첨자를 tspan으로 그려 '.'처럼 보이던 문제 수정, 선 이름을 선 끝에 표시
+- 2026-10-12 v50 6-1 제어 방법 비교표의 토크 공식을 한 줄로 표시, ė의 점 위치 수정
+- 2026-10-12 v51 왼쪽 메뉴 10 엑셀로 차트 그리기도 02·03과 같은 굵은 노란색 강조
+- 2026-10-12 v52 05 제어에 5-2 PD + 중력 보상, 5-3 Computed-Torque 추가 (각 6단계, 예제 코드·그래프, 예상 문제 4개 q53_1·q53_2·q54_1·q54_2, 상세 설명), tools/gen_ctrl_graphs.py
