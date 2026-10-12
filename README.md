@@ -109,3 +109,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 - 2026-10-12 v42 np.matlib.eye 삭제, np.eye를 따로 한 줄로 설명 (np.zeros와 분리)
 - 2026-10-12 v43 np.arccos·np.arctan2 줄에 np.acos·np.atan2(numpy 2.0 별칭) 메모 추가
 - 2026-10-12 v44 09 메뉴 이름을 「Prerequisite Notice List」로 변경
+- 2026-10-12 v45 3-2 LSPB 상세 내용에 t_b 구하는 방법 유도(필기 노트)와 근 선택·역방향·가속도 부족 주의 추가
+- 2026-10-12 v46 LSPB t_b 유도 노트 3) 감속 구간에 V_max = a_max·t_b 줄 추가
+- 2026-10-12 v47 LSPB t_b 유도 노트 3) 감속 구간에 Δq₃ = V_max·t_b − ½·a_max·t_b² 줄 추가
+- 2026-10-12 v48 LSPB t_b 유도 노트 감속 구간 V_max 줄의 주석 삭제

@@ -1399,6 +1399,40 @@ v_max = a·t_b
   <div class="part"><div class="pn"><b>3</b><span>주의해야 될 내용</span></div><div class="pc"><div class="note"><ul><li><code>np.roots</code>로 풀 때 계수는 <b>[1, −t_f, Δq/a]</b>. 실습 파일 주석의 [2, …]는 틀렸습니다(주석 수정 완료).</li><li>근 두 개 중 <b>작은 근</b>이 t_b입니다. 큰 근은 t_f/2보다 커서 의미가 없습니다.</li><li>판별식이 음수면 가속도가 부족해 t_f 안에 도착할 수 없습니다.</li><li>BBPB는 t_b = t_f/2로 고정되어 <b>a = 4Δq/t_f²</b>로 정해집니다. a_max를 그대로 쓰면 목표를 지나칩니다(★★★ 23 수정 완료).</li><li>Δq &lt; 0(되돌아가는 운동)이면 가속도·속도 부호를 반대로 둡니다.</li></ul></div>
   </div></div>
   <div class="part"><div class="pn"><b>4</b><span>상세 내용</span></div><div class="pc"><div class="tbl"><table><thead><tr><th>구간</th><th>시간</th><th>위치 q(t)</th><th>속도</th><th>가속도</th></tr></thead><tbody><tr><td>가속</td><td>0 ≤ t ≤ t_b</td><td><span class="mono">q<sub>0</sub> + ½·a·t²</span></td><td>a·t</td><td>a</td></tr><tr><td>등속</td><td>t_b &lt; t &lt; t_f − t_b</td><td><span class="mono">q<sub>0</sub> + v·(t − t_b/2)</span></td><td>v = a·t_b</td><td>0</td></tr><tr><td>감속</td><td>t_f − t_b ≤ t ≤ t_f</td><td><span class="mono">q_f − ½·a·(t_f − t)²</span></td><td>a·(t_f − t)</td><td>−a</td></tr></tbody></table></div><p class="hint">위 3-1의 실습판에서 LSPB·BBPB를 고르면 세 구간이 그래프로 보입니다.</p><div class="note tip"><div class="t">실습 파일 수정 내역 · 궤적 계획</div><ul><li><b>★★★ 23. BBPB</b>: <code>a = 4*(qf - q0) / tf**2</code>로 계산, 함수 이름 <code>bbpb</code>. q(t_f) = 1.5708 rad(수정 전 2.524 rad).</li><li><b>★★★ 21. CUBIC_이론 정리</b>: <code>sys.exit()</code> 주석 처리, 시간 배열 <code>tf + data_gap/2</code>.</li><li><b>★★★ 22 / 23 머리 주석</b>: coeffs를 <code>[1, -tf, (qf-q0)/a_max]</code>로, LSPB 가능 조건 추가.</li></ul></div>
+<div class="prose" style="margin-top:12px"><h4>LSPB의 t_b 구하는 방법 · 유도 과정 (필기 노트)</h4></div>
+<div class="formula">조건: q(0) = q<sub>0</sub>, V(0) = 0, q(t_f) = q_f, V(t_f) = 0, 가속 시간 = 감속 시간 = t_b
+
+1) 0 ≤ t ≤ t_b                    <span class="c"># 가속 구간</span>
+   q(t) = q<sub>0</sub> + ½·a_max·t²,   V_max = a_max·t_b
+   <b>Δq<sub>1</sub> = ½·a_max·t_b²</b>
+
+2) t_b &lt; t ≤ t_f − t_b            <span class="c"># 등속 구간</span>
+   t_const = t_f − 2t_b,   V_max = a_max·t_b
+   <b>Δq<sub>2</sub> = V_max·(t_f − 2t_b) = a_max·t_b·(t_f − 2t_b)</b>
+
+3) t_f − t_b &lt; t ≤ t_f            <span class="c"># 감속 구간</span>
+   V_max = a_max·t_b
+   Δq<sub>3</sub> = V_max·t_b − ½·a_max·t_b²
+   Δq<sub>3</sub> = a_max·t_b·t_b − ½·a_max·t_b²
+   <b>Δq<sub>3</sub> = ½·a_max·t_b²</b>
+
+총 이동량  q_f − q<sub>0</sub> = Δq<sub>1</sub> + Δq<sub>2</sub> + Δq<sub>3</sub>
+q_f − q<sub>0</sub> = ½·a_max·t_b² + a_max·t_b·(t_f − 2t_b) + ½·a_max·t_b²
+q_f − q<sub>0</sub> = a_max·t_b² + a_max·t_b·(t_f − 2t_b)
+q_f − q<sub>0</sub> = −a_max·t_b² + a_max·t_f·t_b
+
+a_max·t_b² − a_max·t_f·t_b + (q_f − q<sub>0</sub>) = 0      <span class="c"># ÷ a_max</span>
+<b>t_b² − t_f·t_b + (q_f − q<sub>0</sub>)/a_max = 0</b>
+
+coeffs = [1, -tf, (qf - q0) / amax]
+roots  = np.roots(coeffs)
+tb     = roots.min().real                       <span class="c"># 작은 근</span></div>
+<div class="note tip"><div class="t">근의 공식과 주의할 점</div><ul>
+<li>근의 공식: t_b = ( t_f − √(t_f² − 4(q_f − q<sub>0</sub>)/a_max) ) / 2 — 위 요약의 식과 같습니다.</li>
+<li><b>작은 근</b>을 고르는 이유: 큰 근은 t_b &gt; t_f/2가 되어 가속 구간과 감속 구간이 겹칩니다. 예) q<sub>0</sub> = 0, q_f = 1, t_f = 2, a_max = 2 → 근 1.7071, 0.2929 → t_b = 0.2929</li>
+<li><b>역방향(q_f &lt; q<sub>0</sub>)</b>: (q_f − q<sub>0</sub>)/a_max가 음수라 근이 2.2247, −0.2247처럼 하나는 t_f보다 크고 하나는 음수가 됩니다. |q_f − q<sub>0</sub>|로 t_b를 구하고, 가속도·속도에 부호를 따로 붙입니다.</li>
+<li><b>가속도 부족</b>: t_f² &lt; 4|q_f − q<sub>0</sub>|/a_max이면 근이 허수(예: 0.5 ± 0.5j)입니다. LSPB 불가능인데 <code>.real</code>이 0.5로 숨기므로, 판별식을 먼저 검사합니다.</li>
+</ul></div>
   </div></div>
   <div class="part"><div class="pn"><b>5</b><span>프로그램 CODE</span></div><div class="pc"><div class="code"><div class="bar2"><span>LSPB · t_b 이차방정식 · lspb.py</span><button type="button">복사</button></div><pre><code class="language-python">import numpy as np
 
