@@ -87,14 +87,14 @@ def html_block(match):
 SUB = "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎ₐₑₒₓₕₖₗₘₙₚₛₜᵢⱼᵣᵤᵥ"
 SUB_MAP = str.maketrans(SUB, "0123456789+-=()aeoxhklmnpstijruv")
 TALL = set("θJbdfhklt" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-_SKIP = re.compile(r'(<script.*?</script>|<style.*?</style>|<div class="code">.*?</pre></div>|<[^>]+>)', re.S)
+_SKIP = re.compile(r'(<svg.*?</svg>|<script.*?</script>|<style.*?</style>|<div class="code">.*?</pre></div>|<[^>]+>)', re.S)
 
 
 def fix_dots(body):
     """q̇·q̈처럼 결합 점과 ₁·₂ 같은 아래 첨자 문자를 HTML로 바꿈.
     q̇·q̈처럼 결합 점(U+0307/U+0308)이 붙은 글자를 CSS 점으로 바꿈.
     결합 문자는 글꼴에 따라 점이 옆으로 밀려 보이기 때문.
-    스크립트·스타일·태그 속성·복사 버튼이 있는 코드 블록은 그대로 둔다."""
+    SVG·스크립트·스타일·태그 속성·복사 버튼이 있는 코드 블록은 그대로 둔다."""
     def conv(text):
         def r(m):
             ch, mark = m.group(1), m.group(2)
